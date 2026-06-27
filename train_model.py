@@ -133,20 +133,22 @@ if __name__ == '__main__':
         best_model_name = "XGBoost Regressor"
 
     performa = {
-        "Random Forest Regressor": {
-            "r2_val": df_perbandingan.loc[0, 'R² Test'], 
-            "r2": f"{df_perbandingan.loc[0, 'R² Test']*100:.2f}%", 
-            "mae": f"Rp {df_perbandingan.loc[0, 'MAE (Juta)'] * 1_000_000:,.0f}".replace(",", ".")
-        },
-        "XGBoost Regressor": {
-            "r2_val": df_perbandingan.loc[1, 'R² Test'], 
-            "r2": f"{df_perbandingan.loc[1, 'R² Test']*100:.2f}%", 
-            "mae": f"Rp {df_perbandingan.loc[1, 'MAE (Juta)'] * 1_000_000:,.0f}".replace(",", ".")
-        },
-        "best_model": best_model_name,
-        "best_params_rf": rf_grid.best_params_,
-        "best_params_xgb": xgb_grid.best_params_,
-        "tabel_perbandingan": df_perbandingan.to_dict(orient="records")
+    "Random Forest Regressor": {
+        "cv_r2": rf_grid.best_score_,          # Skor rata-rata saat tuning RF
+        "r2_test": df_perbandingan.loc[0, 'R² Test'],
+        "r2": f"{df_perbandingan.loc[0, 'R² Test']*100:.2f}%", 
+        "mae": f"Rp {df_perbandingan.loc[0, 'MAE (Juta)'] * 1_000_000:,.0f}".replace(",", ".")
+    },
+    "XGBoost Regressor": {
+        "cv_r2": xgb_grid.best_score_,         # Skor rata-rata saat tuning XGBoost
+        "r2_test": df_perbandingan.loc[1, 'R² Test'],
+        "r2": f"{df_perbandingan.loc[1, 'R² Test']*100:.2f}%", 
+        "mae": f"Rp {df_perbandingan.loc[1, 'MAE (Juta)'] * 1_000_000:,.0f}".replace(",", ".")
+    },
+    "best_model": best_model_name,
+    "best_params_rf": rf_grid.best_params_,
+    "best_params_xgb": xgb_grid.best_params_,
+    "tabel_perbandingan": df_perbandingan.to_dict(orient="records")
     }
 
     # 6. EXPORT BINER (.PKL)
