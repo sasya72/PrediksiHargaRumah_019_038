@@ -26,7 +26,7 @@ if menu == "📊 Analisis Karakteristik Data":
     st.title("📊 Karakteristik Data (Boxplot)")
     st.write("Analisis distribusi perbandingan data training vs testing.")
     
-    df = pd.read_excel(r"C:\Users\USER\Downloads\EAS ML PREDIKSI HARGA RUMAH\data_rumah.xlsx")
+    df = pd.read_excel("data_rumah.xlsx")
     
     X = df[['LB', 'LT', 'KT', 'KM', 'GRS']]
     y = df['HARGA']
