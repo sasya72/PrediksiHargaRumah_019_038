@@ -26,12 +26,18 @@ if menu == "📊 Analisis Karakteristik Data":
     st.title("📊 Karakteristik Data (Boxplot)")
     st.write("Analisis distribusi perbandingan data training vs testing.")
     
-    base_path = os.path.dirname(__file__)
-    excel_path = os.path.join(base_path, 'data_rumah.xlsx')
-    df = pd.read_excel(excel_path)
-    
-    X = df[['LB', 'LT', 'KT', 'KM', 'GRS']]
-    y = df['HARGA']
+    @st.cache_data
+def load_data():
+    # Pastikan hasil read_excel dimasukkan ke dalam variabel 'df'
+    df_loaded = pd.read_excel("data_rumah.xlsx")
+    return df_loaded
+
+# Panggil fungsi agar variabel 'df' tercipta di memori
+df = load_data()
+
+# Sekarang variabel df sudah bisa digunakan tanpa menyebabkan NameError
+X = df[['LB', 'LT', 'KT', 'KM', 'GRS']]
+y = df['HARGA']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     df_train = X_train.copy(); df_train['Harga'] = y_train; df_train['Set'] = 'Training'
