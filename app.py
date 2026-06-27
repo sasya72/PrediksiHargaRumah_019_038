@@ -62,10 +62,38 @@ elif menu == "🔮 Prediksi Harga":
 
 else: # Ini untuk menu "📊 Performa Model"
     st.title("📊 Analisis & Performa Model")
-    st.subheader("Tabel Perbandingan")
-    st.table(pd.DataFrame(db['tabel_perbandingan']))
     
-    st.subheader("Parameter Terbaik")
+    # 1. Tabel Perbandingan
+    st.subheader("Tabel Perbandingan Metrik Evaluasi")
+    # Mengonversi list dictionary dari pickle menjadi DataFrame
+    df_performa = pd.DataFrame(db['tabel_perbandingan'])
+    
+    # Menampilkan tabel dengan format yang lebih cantik
+    st.dataframe(
+        df_performa.style.format({
+            'R² Train': '{:.4f}',
+            'R² Test': '{:.4f}',
+            'MAE (Juta)': 'Rp {:.2f} Juta',
+            'RMSE (Juta)': 'Rp {:.2f} Juta',
+            'MAPE (%)': '{:.2f}%'
+        }),
+        use_container_width=True
+    )
+    
+    st.divider() # Garis pemisah agar rapi
+    
+    # 2. Parameter Terbaik hasil Tuning
+    st.subheader("Konfigurasi Hyperparameter Terbaik (Hasil Tuning)")
     col1, col2 = st.columns(2)
-    with col1: st.write("RF Params:", db['best_params_rf'])
-    with col2: st.write("XGB Params:", db['best_params_xgb'])
+    
+    with col1:
+        st.markdown("**🌲 Random Forest Regressor**")
+        st.json(db['best_params_rf'])
+        st.caption(f"Skor Cross-Validation R²: {db['Random Forest Regressor']['cv_r2']:.4f}")
+        
+    with col2:
+        st.markdown("**🚀 XGBoost Regressor**")
+        st.json(db['best_params_xgb'])
+        st.caption(f"Skor Cross-Validation R²: {db['XGBoost Regressor']['cv_r2']:.4f}")
+
+    st.info(f"🏆 Kesimpulan: Berdasarkan hasil evaluasi, model **{db['best_model']}** adalah model dengan performa paling optimal untuk dataset ini.")
