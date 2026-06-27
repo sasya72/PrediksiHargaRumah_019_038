@@ -45,7 +45,7 @@ def evaluate_model_full(model, X_train, y_train, X_test, y_test, name):
 # ==========================================
 if __name__ == '__main__':
     # Load data asli dari excel
-    df = pd.read_excel(r"C:\Users\USER\Downloads\EAS ML PREDIKSI HARGA RUMAH\data_rumah.xlsx")
+    pd.read_excel("data_rumah.xlsx")
 
     # Define features (x) and target (y)
     x = df[['LB', 'LT', 'KT', 'KM', 'GRS']]
