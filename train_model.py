@@ -102,6 +102,7 @@ if __name__ == '__main__':
     rf_grid.fit(X_train, y_train)
     best_rf_model = rf_grid.best_estimator_
     print(f"✅ Tuning RF Selesai ({time.time() - start_time:.2f} detik)")
+    print(f"CV R² Score Terbaik Random Forest: {rf_grid.best_score_:.4f}")
 
     # 4. PEMODELAN XGBOOST & TUNING
     print("⏳ Mulai Hyperparameter Tuning XGBoost...")
@@ -118,6 +119,7 @@ if __name__ == '__main__':
     xgb_grid.fit(X_train, y_train)
     best_xgb_model = xgb_grid.best_estimator_
     print(f"✅ Tuning XGB Selesai ({time.time() - start_time:.2f} detik)\n")
+    print(f"CV R² Score Terbaik XGBoost: {xgb_grid.best_score_:.4f}")
 
     # 5. EVALUASI COMPREHENSIVE
     hasil_evaluasi = []
